@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bEJ-yZ-GQb">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -8,16 +8,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Alarm Table View Controller-->
         <scene sceneID="PvF-Y1-vlp">
             <objects>
-                <tableViewController id="mI0-3K-oty" sceneMemberID="viewController">
+                <tableViewController id="mI0-3K-oty" customClass="AlarmTableViewController" customModule="Alarm" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="WLh-Ew-kYx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="78" id="kHu-JQ-omB">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="alarmCell" rowHeight="78" id="kHu-JQ-omB" customClass="AlarmTableViewCell" customModule="Alarm" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="78"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kHu-JQ-omB" id="cu8-11-bCz">
@@ -43,6 +43,9 @@
                                         </stackView>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hCd-TR-KCR">
                                             <rect key="frame" x="316" y="23.5" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="alarmSwitchValueChanged:" destination="kHu-JQ-omB" eventType="valueChanged" id="wEn-ed-hPU"/>
+                                            </connections>
                                         </switch>
                                     </subviews>
                                     <constraints>
@@ -54,6 +57,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="alarmNameLabel" destination="Da0-u5-PY4" id="nGQ-Z8-92C"/>
+                                    <outlet property="alarmSwitch" destination="hCd-TR-KCR" id="eop-o8-nWT"/>
+                                    <outlet property="alarmTimeLabel" destination="Q9q-9t-jGq" id="Zr6-Ng-SLb"/>
                                     <segue destination="KSR-cY-CLv" kind="show" identifier="toAlarmVC" id="sw3-pv-YWW"/>
                                 </connections>
                             </tableViewCell>
@@ -78,7 +84,7 @@
         <!--Title-->
         <scene sceneID="mRw-YU-h9A">
             <objects>
-                <tableViewController id="KSR-cY-CLv" sceneMemberID="viewController">
+                <tableViewController id="KSR-cY-CLv" customClass="AlarmDetailTableViewController" customModule="Alarm" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="4tG-sg-YIB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
