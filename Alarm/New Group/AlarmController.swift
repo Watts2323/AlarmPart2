@@ -19,6 +19,13 @@ class AlarmController: AlarmScheduler {
     //Shared truth
     var myAlarms = [Alarm]()
     
+    var alarmIsOn: Bool = false
+    
+    
+//    init() {
+//        loadFromPersistentStore()
+//    }
+    
     // MARK: - CRUD Functions
     
     func addAlarm(fireDate: Date, name: String, enabled: Bool) {

@@ -55,10 +55,9 @@ class AlarmDetailTableViewController: UITableViewController, AlarmScheduler {
             AlarmController.sharedInstance.toggleEnabled(for: alarm)
             alarmIsOn = alarm.enabled
         }else{
-            alarmIsOn = !alarmIsOn
+            alarmIsOn != alarmIsOn
         }
         setUpAlarmButton()
-        
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {

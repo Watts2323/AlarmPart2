@@ -14,7 +14,7 @@ class Alarm: Codable {
     var uuid: String
     var enabled: Bool
     
-    init(name: String, fireDate: Date, uuid: String = UUID() .uuidString, enabled: Bool) {
+    init(name: String, fireDate: Date, uuid: String = UUID() .uuidString, enabled: Bool = false) {
         self.name = name
         self.fireDate = fireDate
         self.enabled = enabled

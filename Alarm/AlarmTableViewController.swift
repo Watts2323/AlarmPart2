@@ -48,10 +48,9 @@ class AlarmTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toAlarmVC" {
             if let destinationVC = segue.destination as? AlarmDetailTableViewController{
-                if let selectedIndex = tableView.indexPathForSelectedRow{
+                guard let selectedIndex = tableView.indexPathForSelectedRow else {return}
                     let alarms = AlarmController.sharedInstance.myAlarms[selectedIndex.row]
-                    destinationVC.alarm = alarms
-                }
+                destinationVC.alarm = alarms
             }
         }
     }
