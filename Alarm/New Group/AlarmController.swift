@@ -103,7 +103,7 @@ extension AlarmScheduler {
         content.body = "Your alarm named \(alarm.name) is going off!"
         content.sound = UNNotificationSound.default
         
-        let components = Calendar.current.dateComponents([.hour, .minute, .second], from: alarm.fireDate)
+        let components = Calendar.current.dateComponents([.hour, .minute], from: alarm.fireDate)
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
         let request = UNNotificationRequest(identifier: alarm.uuid, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request) { (error) in
