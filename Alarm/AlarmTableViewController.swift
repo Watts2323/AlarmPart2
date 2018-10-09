@@ -12,6 +12,12 @@ class AlarmTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -28,17 +34,40 @@ class AlarmTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "alarmCell", for: indexPath) as? AlarmTableViewCell
         
+        let alarm = AlarmController.sharedInstance.myAlarms[indexPath.row]
         
+        cell?.alarm = alarm
+        cell?.delegate = self
 
-        return cell
+        return cell ?? UITableViewCell()
     }
 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toAlarmVC" {
+            if let destinationVC = segue.destination as? AlarmDetailTableViewController{
+                if let selectedIndex = tableView.indexPathForSelectedRow{
+                    let alarms = AlarmController.sharedInstance.myAlarms[selectedIndex.row]
+                    destinationVC.alarm = alarms
+                }
+            }
+        }
     }
 
+}
+
+extension AlarmTableViewController: AlarmTableViewCellDelegate, AlarmScheduler {
+    func alarmWasToggled(sender: AlarmTableViewCell) {
+        guard let indexPath = tableView.indexPath(for: sender) else {return}
+        let alarm = AlarmController.sharedInstance.myAlarms[indexPath.row]
+        AlarmController.sharedInstance.toggleEnabled(for: alarm)
+        
+        var dateComponents = DateComponents()
+        dateComponents.day = 5
+        dateComponents.hour = 7
+    }
+    
+    
 }

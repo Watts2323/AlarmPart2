@@ -8,25 +8,69 @@
 
 import UIKit
 
-class AlarmDetailTableViewController: UITableViewController {
+class AlarmDetailTableViewController: UITableViewController, AlarmScheduler {
+    
+    @IBOutlet weak var datePickerLabel: UIDatePicker!
+    @IBOutlet weak var alarmNameTextField: UITextField!
+    @IBOutlet weak var alarmEnabledButton: UIButton!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    var alarmIsOn: Bool = true
 
-    // MARK: - Table view data source
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    var alarm: Alarm?{
+        didSet{
+            updateViews()
+            loadViewIfNeeded()
+        }
     }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    func updateViews(){
+        guard let alarm = alarm else { return}
+        datePickerLabel.date = alarm.fireDate
+        alarmIsOn = alarm.enabled
+        alarmNameTextField.text = alarm.name
+        setUpAlarmButton()
+        
     }
-
+    
+    func setUpAlarmButton(){
+        
+        switch alarmIsOn {
+        case true:
+            alarmEnabledButton.backgroundColor = UIColor.yellow
+            alarmEnabledButton.setTitle("ON", for: .normal)
+        case false:
+            alarmEnabledButton.backgroundColor = UIColor.gray
+            alarmEnabledButton.setTitle("Off", for: .normal)
+        }
+    }
+    
+    
+    @IBAction func alarmEnabledButtonTapped(_ sender: Any) {
+        if let alarm = alarm {
+            AlarmController.sharedInstance.toggleEnabled(for: alarm)
+            alarmIsOn = alarm.enabled
+        }else{
+            alarmIsOn = !alarmIsOn
+        }
+        setUpAlarmButton()
+        
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let title = alarmNameTextField.text else {return}
+        guard title != "" else {return}
+        
+        if let alarm = alarm{
+            AlarmController.sharedInstance.update(alarm: alarm, name: title, enabled: alarmIsOn, fireDate: datePickerLabel.date)
+        } else{
+            AlarmController.sharedInstance.addAlarm(fireDate: datePickerLabel.date, name: title, enabled: alarmIsOn)
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }

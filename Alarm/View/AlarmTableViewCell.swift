@@ -18,6 +18,8 @@ class AlarmTableViewCell: UITableViewCell {
     @IBOutlet weak var alarmNameLabel: UILabel!
     @IBOutlet weak var alarmSwitch: UISwitch!
     
+    weak var delegate: AlarmTableViewCellDelegate?
+    
     var alarm: Alarm?{
         didSet{
             updateView()
@@ -34,5 +36,6 @@ class AlarmTableViewCell: UITableViewCell {
     
 
     @IBAction func alarmSwitchValueChanged(_ sender: Any) {
+        delegate?.alarmWasToggled(sender: self)
     }
 }
