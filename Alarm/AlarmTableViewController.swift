@@ -41,6 +41,14 @@ class AlarmTableViewController: UITableViewController {
 
         return cell ?? UITableViewCell()
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let alarm = AlarmController.sharedInstance.myAlarms[indexPath.row]
+            AlarmController.sharedInstance.delete(alarm: alarm)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
 
     // MARK: - Navigation
 

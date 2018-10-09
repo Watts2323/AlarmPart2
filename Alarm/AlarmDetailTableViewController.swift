@@ -23,7 +23,7 @@ class AlarmDetailTableViewController: UITableViewController, AlarmScheduler {
 
     var alarm: Alarm?{
         didSet{
-            updateViews()
+            self.updateViews()
             loadViewIfNeeded()
         }
     }
@@ -55,7 +55,7 @@ class AlarmDetailTableViewController: UITableViewController, AlarmScheduler {
             AlarmController.sharedInstance.toggleEnabled(for: alarm)
             alarmIsOn = alarm.enabled
         }else{
-            alarmIsOn != alarmIsOn
+            alarmIsOn = !alarmIsOn
         }
         setUpAlarmButton()
     }

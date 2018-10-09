@@ -35,11 +35,7 @@ class Alarm: Codable {
 
 extension Alarm: Equatable {
     static func == (lhs: Alarm, rhs: Alarm) -> Bool {
-        if lhs.name != rhs.name { return false}
-        if lhs.fireDate != rhs.fireDate { return false}
-        if lhs.enabled != rhs.enabled { return false}
-        if lhs.uuid != rhs.uuid { return false}
-        return true
+        return lhs.uuid != rhs.uuid
     }
     
     
